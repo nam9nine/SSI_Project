@@ -5,25 +5,24 @@ import (
 	"fmt"
 )
 
-package core
+type (
+	Method string
+)
 
-import (
-"errors"
-"fmt"
+const (
+	KeyMethod  Method = "key"
+	EthrMethod Method = "ethr"
+	BtcrMethod Method = "btcr"
 )
 
 type DID struct {
 	scheme                   string
-	method                   string
+	method                   Method
 	methodSpecificIdentifier string
-	DIDKey
+	did                      string
 }
 
-type (
-	DIDKey string
-)
-
-func NewDID(scheme string, method string, methodSpecificIdentifier string) (*DID, error) {
+func NewDID(scheme string, method Method, methodSpecificIdentifier string) (*DID, error) {
 	if scheme != "did" || method == "" || methodSpecificIdentifier == "" {
 		return nil, errors.New("invalid did parameters")
 	}
@@ -33,7 +32,7 @@ func NewDID(scheme string, method string, methodSpecificIdentifier string) (*DID
 	newDID.scheme = scheme
 	newDID.method = method
 	newDID.methodSpecificIdentifier = methodSpecificIdentifier
-	newDID.DIDKey = DIDKey(fmt.Sprintf("%s:%s:%s", scheme, method, methodSpecificIdentifier))
+	newDID.did = fmt.Sprintf("%s:%s:%s", scheme, method, methodSpecificIdentifier)
 
 	return newDID, nil
 }
