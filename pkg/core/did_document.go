@@ -1,5 +1,18 @@
 package core
 
+import (
+	"encoding/json"
+	"errors"
+)
+
+type (
+	Type string
+)
+
+const (
+	VERIFICATION_KEY_TYPE_SECP256R1 = "P256VerificationKey2018"
+)
+
 type DIDDocument struct {
 	Context []string `json:"@context"`
 
@@ -36,13 +49,41 @@ type Service struct {
 	ServiceEndpoint string `json:"serviceEndpoint"`
 }
 
-func NewDIDDocument(did string, vm []VerificationMethod) *DIDDocument {
-	doc := new(DIDDocument)
+// GenerateDIDDocument 추후 json으로 매개변수 받기
+func (doc *DIDDocument) GenerateDIDDocument(did string, vm []VerificationMethod) *DIDDocument {
 
 	doc.Context = []string{"https://www.w3.org/ns/did/v1"}
-
 	doc.Id = did
 	doc.VerificationMethod = vm
-
 	return doc
+}
+
+func (doc *DIDDocument) AppendVerificationMethod(id string, t string, controller string, publickey string) []VerificationMethod {
+	newVm := VerificationMethod{
+		Id:                 id,
+		Type:               t,
+		Controller:         controller,
+		PublicKeyMultibase: publickey,
+	}
+
+	doc.VerificationMethod = append(doc.VerificationMethod, newVm)
+	return doc.VerificationMethod
+}
+
+func (doc *DIDDocument) Produce() (string, error) {
+	docStr, err := json.Marshal(doc)
+
+	if err != nil {
+		return "", errors.New("error marshalling DID document")
+	}
+
+	return string(docStr), nil
+}
+
+func (doc *DIDDocument) Consume(str string) (string, error) {
+	err := json.Unmarshal([]byte(str), doc)
+	if err != nil {
+		return "", errors.New("error unmarshalling DID document")
+	}
+	return str, nil
 }

@@ -16,23 +16,25 @@ const (
 )
 
 type DID struct {
-	scheme                   string
-	method                   Method
-	methodSpecificIdentifier string
-	did                      string
+	Scheme                   string
+	Method                   Method
+	MethodSpecificIdentifier string
+	Did                      string
 }
 
-func NewDID(scheme string, method Method, methodSpecificIdentifier string) (*DID, error) {
+func (did *DID) GenerateDID(scheme string, method Method, methodSpecificIdentifier string) (string, error) {
 	if scheme != "did" || method == "" || methodSpecificIdentifier == "" {
-		return nil, errors.New("invalid did parameters")
+		return "", errors.New("invalid did parameters")
 	}
 
-	var newDID = new(DID)
+	did.Scheme = scheme
+	did.Method = method
+	did.MethodSpecificIdentifier = methodSpecificIdentifier
+	did.Did = fmt.Sprintf("%s:%s:%s", scheme, method, methodSpecificIdentifier)
 
-	newDID.scheme = scheme
-	newDID.method = method
-	newDID.methodSpecificIdentifier = methodSpecificIdentifier
-	newDID.did = fmt.Sprintf("%s:%s:%s", scheme, method, methodSpecificIdentifier)
+	return did.Did, nil
+}
 
-	return newDID, nil
+func (did *DID) String() string {
+	return did.Did
 }

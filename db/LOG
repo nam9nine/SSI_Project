@@ -1,0 +1,32 @@
+=============== Apr 17, 2024 (KST) ===============
+23:00:29.602807 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+23:00:29.610582 db@open opening
+23:00:29.611216 version@stat F·[] S·0B[] Sc·[]
+23:00:29.619822 db@janitor F·2 G·0
+23:00:29.619957 db@open done T·9.330542ms
+23:00:29.620143 db@close closing
+23:00:29.620286 db@close done T·136.833µs
+=============== Apr 17, 2024 (KST) ===============
+23:03:11.888127 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+23:03:11.888861 version@stat F·[] S·0B[] Sc·[]
+23:03:11.888883 db@open opening
+23:03:11.888966 journal@recovery F·1
+23:03:11.890101 journal@recovery recovering @1
+23:03:11.894460 memdb@flush created L0@2 N·1 S·441B "did..Aak,v1":"did..Aak,v1"
+23:03:11.894676 version@stat F·[1] S·441B[441B] Sc·[0.25]
+23:03:11.908014 db@janitor F·3 G·0
+23:03:11.908046 db@open done T·19.15075ms
+23:03:11.908135 db@close closing
+23:03:11.908221 db@close done T·83.667µs
+=============== Apr 17, 2024 (KST) ===============
+23:07:51.659654 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+23:07:51.660600 version@stat F·[1] S·441B[441B] Sc·[0.25]
+23:07:51.660644 db@open opening
+23:07:51.660772 journal@recovery F·1
+23:07:51.661975 journal@recovery recovering @3
+23:07:51.666248 memdb@flush created L0@5 N·1 S·441B "did..5nB,v3":"did..5nB,v3"
+23:07:51.667096 version@stat F·[2] S·882B[882B] Sc·[0.50]
+23:07:51.681081 db@janitor F·4 G·0
+23:07:51.681127 db@open done T·20.467708ms
+23:07:51.681273 db@close closing
+23:07:51.681422 db@close done T·145.792µs

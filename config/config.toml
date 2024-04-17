@@ -1,0 +1,8 @@
+[servers]
+    [servers.vdr]
+    ip = "127.0.0.1"
+    ports = "50051"
+
+    [servers.holder]
+    ip = "127.0.0.1"
+    ports = "50052"
