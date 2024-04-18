@@ -12,8 +12,9 @@ type ServerConfig struct {
 }
 
 type Servers struct {
-	VDR    ServerConfig `toml:"vdr"`
-	Holder ServerConfig `toml:"holder"`
+	Registrar ServerConfig `toml:"registrar"`
+	Resolver  ServerConfig `toml:"resolver"`
+	Holder    ServerConfig `toml:"holder"`
 }
 
 type Config struct {

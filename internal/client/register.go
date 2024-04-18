@@ -4,13 +4,14 @@ import (
 	"context"
 	"errors"
 	"github.com/nam9nine/SSI_Project/config"
-	"github.com/nam9nine/SSI_Project/protos/vdr"
+	registrar "github.com/nam9nine/SSI_Project/protos/vdr/registrar"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/credentials/insecure"
 	"log"
 )
 
-func RegisterDIDDoc(did string, doc string) (*vdr.RegisterDidDocRes, error) {
+// RegistrarDID DID 등록 요청 코드
+func RegistrarDID(did string, doc string) (*registrar.DIDRegistrarRes, error) {
 
 	cfg, err := config.LoadConfig("config/config.toml")
 
@@ -19,7 +20,7 @@ func RegisterDIDDoc(did string, doc string) (*vdr.RegisterDidDocRes, error) {
 		return nil, err
 	}
 
-	addr := cfg.Servers.VDR.Address()
+	addr := cfg.Servers.Registrar.Address()
 
 	if addr == "" {
 		return nil, errors.New("주소가 존재하지 않음")
@@ -28,12 +29,13 @@ func RegisterDIDDoc(did string, doc string) (*vdr.RegisterDidDocRes, error) {
 	conn, err := grpc.Dial(addr, grpc.WithTransportCredentials(insecure.NewCredentials()))
 
 	if err != nil {
-		return nil, errors.New("서버와 연결 안 됨")
+		return nil, errors.New("registrar 서버와 연결 안 됨")
 	}
 	defer conn.Close()
-	newClient := vdr.NewVDRClient(conn)
+	newClient := registrar.NewDIDRegistrarClient(conn)
 
-	res, err := newClient.RegisterDidDoc(context.Background(), &vdr.RegisterDidDocReq{
+	//registrar 서버 함수 호출
+	res, err := newClient.RegisterDidDoc(context.Background(), &registrar.DIDRegistrarReq{
 		Did:    did,
 		DidDoc: doc,
 	})

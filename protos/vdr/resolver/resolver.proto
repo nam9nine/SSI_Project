@@ -1,0 +1,22 @@
+syntax = "proto3";
+option go_package = "github.com/nam9nine/protos/vdr/resolver";
+package vdr.resolver;
+service DIDResolver {
+  rpc ResolveDID(ResolveDIDReq) returns (ResolveDIDRes);
+}
+
+
+message ResolveDIDReq {
+  string did = 1;
+}
+
+message ResolveDIDRes {
+  string didDoc = 1;
+  State state = 2;
+}
+
+enum State {
+  UNKNOWN = 0;
+  SUCCESS = 1;
+  FAILURE = 2;
+}

@@ -1,10 +1,12 @@
-package holder
+package actors
 
 import (
 	"fmt"
-	vdrClient "github.com/nam9nine/SSI_Project/internal/client"
+	"github.com/nam9nine/SSI_Project/config"
+	client "github.com/nam9nine/SSI_Project/internal/client"
 	"github.com/nam9nine/SSI_Project/pkg/core"
-	"github.com/nam9nine/SSI_Project/protos/vdr"
+	registrar "github.com/nam9nine/SSI_Project/protos/vdr/registrar"
+	resolver "github.com/nam9nine/SSI_Project/protos/vdr/resolver"
 	"log"
 )
 
@@ -12,10 +14,12 @@ type Holder struct {
 	DID    *core.DID
 	DIDDoc *core.DIDDocument
 	Key    *core.EcdsaKeyStorage
+	Cfg    *config.Config
 }
 
-func (h *Holder) InitHolder() {
+func (h *Holder) InitHolder(cfg *config.Config) {
 	// PKI
+	h.Cfg = cfg
 	h.Key = new(core.EcdsaKeyStorage)
 
 	publicKey, err := h.Key.GenerateKey()
@@ -39,16 +43,17 @@ func (h *Holder) InitHolder() {
 	vm := h.DIDDoc.AppendVerificationMethod(verficationId, core.VERIFICATION_KEY_TYPE_SECP256R1, did, publicKey)
 	h.DIDDoc.GenerateDIDDocument(did, vm)
 
-	req, err := h.RegisterHolderDoc()
+	res, err := h.RegistHolderDID()
 
 	if err != nil {
 		panic(err)
 	}
 
-	log.Printf(req.String())
+	log.Printf(res.String())
+
 }
 
-func (h *Holder) RegisterHolderDoc() (*vdr.RegisterDidDocRes, error) {
+func (h *Holder) RegistHolderDID() (*registrar.DIDRegistrarRes, error) {
 
 	docString, err := h.DIDDoc.Produce()
 	if err != nil {
@@ -58,7 +63,7 @@ func (h *Holder) RegisterHolderDoc() (*vdr.RegisterDidDocRes, error) {
 	}
 
 	// VDR 클라이언트를 통해 DID 문서를 등록합니다.
-	req, err := vdrClient.RegisterDIDDoc(h.DID.Did, docString)
+	req, err := client.RegistrarDID(h.DID.Did, docString)
 	if err != nil {
 
 		log.Printf("Error registering DID document: %v", err)
@@ -66,4 +71,20 @@ func (h *Holder) RegisterHolderDoc() (*vdr.RegisterDidDocRes, error) {
 	}
 
 	return req, nil
+}
+
+func (h *Holder) ResolveHolderDID() *resolver.ResolveDIDRes {
+	did := h.DID.String()
+
+	if h.Cfg == nil {
+		log.Printf("cfg is nil")
+	}
+
+	res, err := client.ResolverDID(did, h.Cfg)
+
+	if err != nil {
+		log.Printf("Error resolving DID document: %v", err)
+		return nil
+	}
+	return res
 }

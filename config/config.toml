@@ -1,8 +1,17 @@
 [servers]
-    [servers.vdr]
+    [servers.registrar]
     ip = "127.0.0.1"
     ports = "50051"
 
-    [servers.holder]
+    [servers.resolver]
     ip = "127.0.0.1"
     ports = "50052"
+
+    [servers.holder]
+    ip = "127.0.0.1"
+    ports = "50053"
+
+    [servers.issuer]
+    ip = "127.0.0.1"
+    prots = "50054"
+

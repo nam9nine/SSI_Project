@@ -6,12 +6,11 @@ import (
 )
 
 func main() {
-	//register 서버 시작
 	cfg, err := config.LoadConfig("config/config.toml")
 
 	if err != nil {
 		panic(err)
 	}
 
-	server.StartRegisterServer(cfg)
+	server.StartDIDResolverServer(cfg)
 }

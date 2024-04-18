@@ -1,0 +1,26 @@
+syntax = "proto3";
+package vdr.registrar;
+option go_package = "github.com/nam9nine/SSI_Project/protos/vdr/registrar";
+
+
+service DIDRegistrar {
+  rpc RegisterDidDoc(DIDRegistrarReq) returns (DIDRegistrarRes) {}
+}
+
+message DIDRegistrarReq {
+  string did = 1;
+  string didDoc = 2;
+}
+
+
+message DIDRegistrarRes {
+  State state = 1;
+  string message = 2;
+}
+
+
+enum State {
+  UNKNOWN = 0;
+  SUCCESS = 1;
+  FAILURE = 2;
+}
