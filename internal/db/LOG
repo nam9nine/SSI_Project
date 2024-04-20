@@ -101,3 +101,31 @@
 14:09:12.106615 version@stat F·[4 3] S·3KiB[1KiB 1KiB] Sc·[1.00 0.00]
 14:09:12.110017 table-move@commit exiting
 14:09:12.110079 db@close done T·3.536125ms
+=============== Apr 20, 2024 (KST) ===============
+10:39:34.653157 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+10:39:34.654670 version@stat F·[4 3] S·3KiB[1KiB 1KiB] Sc·[1.00 0.00]
+10:39:34.654692 db@open opening
+10:39:34.654787 journal@recovery F·1
+10:39:34.655174 journal@recovery recovering @21
+10:39:34.656017 version@stat F·[4 3] S·3KiB[1KiB 1KiB] Sc·[1.00 0.00]
+10:39:34.668542 db@janitor F·9 G·0
+10:39:34.668600 db@open done T·13.893625ms
+10:39:34.668682 db@close closing
+10:39:34.668739 table@move L0@20 -> L1
+10:39:34.668758 table-move@commit exiting
+10:39:34.668831 db@close done T·148µs
+=============== Apr 20, 2024 (KST) ===============
+10:39:34.672064 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+10:39:34.672483 version@stat F·[4 3] S·3KiB[1KiB 1KiB] Sc·[1.00 0.00]
+10:39:34.672498 db@open opening
+10:39:34.672567 journal@recovery F·1
+10:39:34.673279 journal@recovery recovering @23
+10:39:34.677605 memdb@flush created L0@25 N·1 S·441B "did..mMx,v15":"did..mMx,v15"
+10:39:34.677845 version@stat F·[5 3] S·3KiB[2KiB 1KiB] Sc·[1.25 0.00]
+10:39:34.693166 db@janitor F·10 G·0
+10:39:34.693220 db@open done T·20.711292ms
+10:39:34.693300 table@move L0@25 -> L1
+10:39:34.693342 db@close closing
+10:39:34.693430 version@stat F·[4 4] S·3KiB[1KiB 1KiB] Sc·[1.00 0.00]
+10:39:34.700602 table-move@commit exiting
+10:39:34.700689 db@close done T·7.344667ms
