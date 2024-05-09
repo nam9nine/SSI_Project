@@ -14,13 +14,12 @@ type ResolverServer struct {
 	resolver.UnimplementedDIDResolverServer
 }
 
-func byte2string(b []byte) string {
+func byteToString(b []byte) string {
 	return string(b[:len(b)])
 }
 
-// ResolveDID ResolveDID(context.Context, *ResolveDIDReq) (*ResolveDIDRes, error) 구현
+// ResolveDID ResolveDID(context.Context, *ResolveDIDReq) (*ResolveDIDRes, error) RPC메서드 구현
 func (r *ResolverServer) ResolveDID(ctx context.Context, req *resolver.ResolveDIDReq) (*resolver.ResolveDIDRes, error) {
-	log.Printf("Resolve DID: %s\n", req.Did)
 
 	db, err := leveldb.OpenFile("./internal/db", nil)
 	if err != nil {
@@ -29,10 +28,14 @@ func (r *ResolverServer) ResolveDID(ctx context.Context, req *resolver.ResolveDI
 	defer db.Close()
 
 	data, err := db.Get([]byte(req.Did), nil)
-	didDocument := byte2string(data)
+	didDocument := byteToString(data)
+
+	log.Printf("Resolve DID: %s\n", req.Did)
+
 	return &resolver.ResolveDIDRes{DidDoc: didDocument}, nil
 }
 
+// StartDIDResolverServer 서버 시작 함수
 func StartDIDResolverServer(cfg *config.Config) {
 	lis, err := net.Listen("tcp", cfg.Servers.Resolver.Address())
 

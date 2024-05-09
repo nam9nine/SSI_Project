@@ -32,7 +32,7 @@ func (did *DID) GenerateDID(scheme string, method Method, methodSpecificIdentifi
 	did.MethodSpecificIdentifier = methodSpecificIdentifier
 	did.Did = fmt.Sprintf("%s:%s:%s", scheme, method, methodSpecificIdentifier)
 
-	return did.Did, nil
+	return did.String(), nil
 }
 
 func (did *DID) String() string {

@@ -129,3 +129,117 @@
 10:39:34.693430 version@stat F·[4 4] S·3KiB[1KiB 1KiB] Sc·[1.00 0.00]
 10:39:34.700602 table-move@commit exiting
 10:39:34.700689 db@close done T·7.344667ms
+=============== May 8, 2024 (KST) ===============
+09:26:31.809023 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:26:31.811815 version@stat F·[4 4] S·3KiB[1KiB 1KiB] Sc·[1.00 0.00]
+09:26:31.811833 db@open opening
+09:26:31.811921 journal@recovery F·1
+09:26:31.812362 journal@recovery recovering @26
+09:26:31.813275 version@stat F·[4 4] S·3KiB[1KiB 1KiB] Sc·[1.00 0.00]
+09:26:31.832945 db@janitor F·10 G·0
+09:26:31.832991 db@open done T·21.146375ms
+09:26:31.833075 table@move L0@20 -> L1
+09:26:31.833115 db@close closing
+09:26:31.833259 version@stat F·[3 5] S·3KiB[1KiB 2KiB] Sc·[0.75 0.00]
+09:26:31.839131 table-move@commit exiting
+09:26:31.839414 db@close done T·6.2975ms
+=============== May 8, 2024 (KST) ===============
+09:26:31.842474 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:26:31.842992 version@stat F·[3 5] S·3KiB[1KiB 2KiB] Sc·[0.75 0.00]
+09:26:31.843007 db@open opening
+09:26:31.843090 journal@recovery F·1
+09:26:31.843813 journal@recovery recovering @28
+09:26:31.849095 memdb@flush created L0@30 N·1 S·441B "did..huM,v17":"did..huM,v17"
+09:26:31.849331 version@stat F·[4 5] S·3KiB[1KiB 2KiB] Sc·[1.00 0.00]
+09:26:31.862841 db@janitor F·11 G·0
+09:26:31.862891 db@open done T·19.870667ms
+09:26:31.863017 table@move L0@30 -> L1
+09:26:31.863043 db@close closing
+09:26:31.863153 version@stat F·[3 6] S·3KiB[1KiB 2KiB] Sc·[0.75 0.00]
+09:26:31.871028 table-move@commit exiting
+09:26:31.871082 db@close done T·8.038583ms
+=============== May 8, 2024 (KST) ===============
+09:28:18.096488 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:28:18.098023 version@stat F·[3 6] S·3KiB[1KiB 2KiB] Sc·[0.75 0.00]
+09:28:18.098050 db@open opening
+09:28:18.098160 journal@recovery F·1
+09:28:18.099164 journal@recovery recovering @31
+09:28:18.100323 version@stat F·[3 6] S·3KiB[1KiB 2KiB] Sc·[0.75 0.00]
+09:28:18.120949 db@janitor F·11 G·0
+09:28:18.120983 db@open done T·22.920209ms
+09:28:18.121114 db@close closing
+09:28:18.121217 db@close done T·99.584µs
+=============== May 8, 2024 (KST) ===============
+09:28:18.124079 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:28:18.124382 version@stat F·[3 6] S·3KiB[1KiB 2KiB] Sc·[0.75 0.00]
+09:28:18.124407 db@open opening
+09:28:18.124508 journal@recovery F·1
+09:28:18.125568 journal@recovery recovering @33
+09:28:18.130717 memdb@flush created L0@35 N·1 S·441B "did..FaW,v19":"did..FaW,v19"
+09:28:18.131745 version@stat F·[4 6] S·4KiB[1KiB 2KiB] Sc·[1.00 0.00]
+09:28:18.146161 db@janitor F·12 G·0
+09:28:18.146186 db@open done T·21.768084ms
+09:28:18.146229 table@move L0@35 -> L1
+09:28:18.146270 db@close closing
+09:28:18.146302 version@stat F·[3 7] S·4KiB[1KiB 3KiB] Sc·[0.75 0.00]
+09:28:18.150701 table-move@commit exiting
+09:28:18.150765 db@close done T·4.493958ms
+=============== May 8, 2024 (KST) ===============
+09:35:29.044198 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:35:29.045831 version@stat F·[3 7] S·4KiB[1KiB 3KiB] Sc·[0.75 0.00]
+09:35:29.045854 db@open opening
+09:35:29.045960 journal@recovery F·1
+09:35:29.046363 journal@recovery recovering @36
+09:35:29.047114 version@stat F·[3 7] S·4KiB[1KiB 3KiB] Sc·[0.75 0.00]
+09:35:29.067353 db@janitor F·12 G·0
+09:35:29.067390 db@open done T·21.527125ms
+09:35:29.068270 db@close closing
+09:35:29.068325 db@close done T·54.875µs
+=============== May 8, 2024 (KST) ===============
+09:35:29.069728 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+09:35:29.069949 version@stat F·[3 7] S·4KiB[1KiB 3KiB] Sc·[0.75 0.00]
+09:35:29.069967 db@open opening
+09:35:29.070053 journal@recovery F·1
+09:35:29.070634 journal@recovery recovering @38
+09:35:29.075123 memdb@flush created L0@40 N·1 S·441B "did..UDA,v21":"did..UDA,v21"
+09:35:29.075495 version@stat F·[4 7] S·4KiB[1KiB 3KiB] Sc·[1.00 0.00]
+09:35:29.088633 db@janitor F·13 G·0
+09:35:29.088654 db@open done T·18.678ms
+09:35:29.088697 table@move L0@40 -> L1
+09:35:29.088720 db@close closing
+09:35:29.088725 table-move@commit exiting
+09:35:29.088808 db@close done T·86.083µs
+=============== May 9, 2024 (KST) ===============
+20:46:08.691612 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+20:46:08.693340 version@stat F·[4 7] S·4KiB[1KiB 3KiB] Sc·[1.00 0.00]
+20:46:08.693356 db@open opening
+20:46:08.693439 journal@recovery F·1
+20:46:08.693738 journal@recovery recovering @41
+20:46:08.694446 version@stat F·[4 7] S·4KiB[1KiB 3KiB] Sc·[1.00 0.00]
+20:46:08.717187 db@janitor F·13 G·0
+20:46:08.717219 db@open done T·23.853375ms
+20:46:08.717312 table@move L0@40 -> L1
+20:46:08.717397 version@stat F·[3 8] S·4KiB[1KiB 3KiB] Sc·[0.75 0.00]
+20:46:08.717721 db@close closing
+20:46:08.729018 table-move@commit exiting
+20:46:08.729106 db@close done T·11.383333ms
+=============== May 9, 2024 (KST) ===============
+20:46:08.733234 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+20:46:08.733802 version@stat F·[3 8] S·4KiB[1KiB 3KiB] Sc·[0.75 0.00]
+20:46:08.733826 db@open opening
+20:46:08.733931 journal@recovery F·1
+20:46:08.734604 journal@recovery recovering @43
+20:46:08.739932 memdb@flush created L0@45 N·1 S·441B "did..jGB,v23":"did..jGB,v23"
+20:46:08.740186 version@stat F·[4 8] S·5KiB[1KiB 3KiB] Sc·[1.00 0.00]
+20:46:08.753370 db@janitor F·14 G·0
+20:46:08.753431 db@open done T·19.592208ms
+20:46:08.753597 table@move L0@45 -> L1
+20:46:08.753630 table-move@commit exiting
+20:46:08.753607 db@close closing
+20:46:08.753743 db@close done T·133.375µs
+=============== May 9, 2024 (KST) ===============
+20:46:55.708586 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+20:46:55.709644 version@stat F·[4 8] S·5KiB[1KiB 3KiB] Sc·[1.00 0.00]
+=============== May 9, 2024 (KST) ===============
+20:47:03.503246 log@legend F·NumFile S·FileSize N·Entry C·BadEntry B·BadBlock Ke·KeyError D·DroppedEntry L·Level Q·SeqNum T·TimeElapsed
+20:47:03.503467 version@stat F·[4 8] S·5KiB[1KiB 3KiB] Sc·[1.00 0.00]

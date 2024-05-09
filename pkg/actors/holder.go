@@ -57,7 +57,6 @@ func (h *Holder) RegistHolderDID() (*registrar.DIDRegistrarRes, error) {
 
 	docString, err := h.DIDDoc.Produce()
 	if err != nil {
-
 		log.Printf("Error producing DID document: %v", err)
 		return nil, err
 	}

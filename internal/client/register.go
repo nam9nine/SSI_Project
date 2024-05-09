@@ -32,6 +32,7 @@ func RegistrarDID(did string, doc string) (*registrar.DIDRegistrarRes, error) {
 		return nil, errors.New("registrar 서버와 연결 안 됨")
 	}
 	defer conn.Close()
+	// registrar service와 client 연결
 	newClient := registrar.NewDIDRegistrarClient(conn)
 
 	//registrar 서버 함수 호출
