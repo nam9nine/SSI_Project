@@ -1,7 +1,6 @@
 package actors
 
 import (
-	"crypto/ecdsa"
 	"fmt"
 	"github.com/nam9nine/SSI_Project/config"
 	client "github.com/nam9nine/SSI_Project/internal/client"
@@ -16,6 +15,8 @@ type Holder struct {
 	DIDDoc *core.DIDDocument
 	Key    *core.EcdsaKeyStorage
 	Cfg    *config.Config
+	VC     string
+	VP     string
 }
 
 func (h *Holder) InitHolder(cfg *config.Config) {
@@ -89,6 +90,18 @@ func (h *Holder) ResolveHolderDID() (*resolver.ResolveDIDRes, error) {
 	return res, nil
 }
 
-func (h *Holder) RequestCreateVC(issuerDID string, cs *core.CredentialSubject, issuerPvKey *ecdsa.PrivateKey) {
+func (h *Holder) GetVCS() string {
+	return h.VC
+}
 
+func (h *Holder) PushVC(vc string) {
+	h.VC = vc
+}
+
+func (h *Holder) GetVP() string {
+	return h.VP
+}
+
+func (h *Holder) PushVP(vp string) {
+	h.VP = vp
 }

@@ -31,47 +31,52 @@ func (i *IssuerServer) CreateUniversityVC(context context.Context, req *issuer.I
 	res := issuer.IssuerRes{}
 	cre := &core.CredentialSubject{}
 
+	cfg, err := config.LoadConfig("./././config/config.toml")
+	iss := NewIssuer(cfg)
+
+	i.Issuer = iss
+	if err != nil {
+		return nil, err
+	}
+
 	vc := core.GenerateUniversityVC(i.Issuer.DID.Did, cre, i.Issuer.Key.PrivateKey)
 
-	res.VC = vc.Proof.JWS
+	res.VC = core.ConvertVCtoJSON(vc)
 
 	return &res, nil
 }
+func NewIssuer(cfg *config.Config) *Issuer {
+	iss := &Issuer{
+		Cfg:    cfg,
+		Key:    new(core.EcdsaKeyStorage),
+		DID:    new(core.DID),
+		DIDDoc: new(core.DIDDocument),
+	}
+	err := iss.InitIssuer()
 
-func (i *Issuer) InitIssuer(cfg *config.Config) {
-	// PKI
-	i.Cfg = cfg
-	i.Key = new(core.EcdsaKeyStorage)
+	if err != nil {
+		panic(err)
+	}
+	return iss
+}
 
+func (i *Issuer) InitIssuer() error {
 	publicKey, err := i.Key.GenerateKey()
-
 	if err != nil {
-		log.Printf("error generating key: %s", err)
-		panic(err)
+		return fmt.Errorf("error generating key: %v", err)
 	}
-	//DID
-	i.DID = new(core.DID)
+
 	did, err := i.DID.GenerateDID("did", core.KeyMethod, publicKey)
-
 	if err != nil {
-		log.Fatalf("새 DID 생성 실패: %v", err)
-	}
-	//추후 추가 할 때마다 key 번호 증가
-	//DID DID Document 등록 및 doc 생성
-	verficationId := fmt.Sprintf("%s#keys-1", did)
-
-	i.DIDDoc = new(core.DIDDocument)
-	vm := i.DIDDoc.AppendVerificationMethod(verficationId, core.VERIFICATION_KEY_TYPE_SECP256R1, did, publicKey)
-	i.DIDDoc.GenerateDIDDocument(did, vm)
-
-	res, err := i.RegistIssuerDID()
-
-	if err != nil {
-		panic(err)
+		return fmt.Errorf("new DID creation failed: %v", err)
 	}
 
-	log.Printf(res.String())
+	verificationId := fmt.Sprintf("%s#keys-1", did)
+	i.DIDDoc.AppendVerificationMethod(verificationId, core.VERIFICATION_KEY_TYPE_SECP256R1, did, publicKey)
+	i.DIDDoc.GenerateDIDDocument(did, nil)
 
+	log.Println("Issuer DID 생성, DID Document 생성 및 VDR에 DID Document 등록 완료.")
+	return nil
 }
 
 func (i *Issuer) RegistIssuerDID() (*registrar.DIDRegistrarRes, error) {

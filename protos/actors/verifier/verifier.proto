@@ -1,0 +1,15 @@
+syntax = "proto3";
+package actors.verifier;
+option go_package = "github.com/nam9nine/SSI_Project/protos/actors/verifier";
+
+service VerifierService {
+  rpc VerifyVP(VPReq) returns(VPRes);
+}
+
+message VPReq {
+  string vp = 1;
+}
+
+message VPRes {
+  string state = 2;
+}

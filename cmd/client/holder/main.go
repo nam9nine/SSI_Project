@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/nam9nine/SSI_Project/config"
 	"github.com/nam9nine/SSI_Project/pkg/actors"
+	"github.com/nam9nine/SSI_Project/pkg/core"
 	"log"
 	"os"
 )
@@ -12,6 +13,7 @@ import (
 func main() {
 	hldr := new(actors.Holder)
 	iss := new(actors.Issuer)
+	ver := new(actors.Verifier)
 
 	// 설정 파일 로드
 	cfg, err := config.LoadConfig("config/config.toml")
@@ -27,7 +29,10 @@ func main() {
 		fmt.Println("  (d) DID 및 DID Document 등록")
 		fmt.Println("  (r) DID Resolver 실행")
 		fmt.Println("  (v) VC 요청")
+		fmt.Println("  (p) VP 생성")
+		fmt.Println("  (s) VP 전달 및 검증 요청")
 		fmt.Println("  (q) 프로그램 종료")
+
 		fmt.Print("입력: ")
 
 		input, _, err = reader.ReadRune()
@@ -44,8 +49,7 @@ func main() {
 			log.Println("DID와 DID Document를 등록합니다.")
 			hldr.InitHolder(cfg)
 			log.Println("Holder DID 생성, DID Document 생성 및 VDR에 DID Document 등록 완료.")
-			iss.InitIssuer(cfg)
-			log.Println("Issuer DID 생성, DID Document 생성 및 VDR에 DID Document 등록 완료.")
+
 		case 'r':
 			log.Println("DID Resolver 실행합니다.")
 			res, err := hldr.ResolveHolderDID()
@@ -64,9 +68,37 @@ func main() {
 				panic(err)
 
 			}
-
+			log.Println("Issuer VC 생성 완료")
+			hldr.PushVC(res.VC)
 			log.Println("vc : ", res.VC)
 
+		case 'p':
+			log.Println("holder가 VP를 만듭니다")
+			vcData := hldr.GetVCS()
+			vc, err := core.UnmarshalVC(vcData)
+
+			if err != nil {
+				panic(err)
+			}
+
+			vp, err := core.GenerateVP(vc, hldr.Key.PrivateKey)
+
+			if err != nil {
+				panic(err)
+			}
+			log.Println("vp생성 완료")
+			log.Println("vp : ", vp)
+		case 's':
+			log.Println("VP 전달 및 검증 요청")
+			vp := hldr.GetVP()
+			res, err := ver.RequestVP(vp)
+
+			if err != nil {
+				panic(err)
+			}
+
+			log.Println("검증 상태 : ", res.State)
+			log.Println("VP VC 검증 완료")
 		default:
 			fmt.Println("잘못된 입력입니다. 다시 시도하세요.")
 		}

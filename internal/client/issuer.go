@@ -19,7 +19,7 @@ func RequestVC(did string) (*issuer.IssuerRes, error) {
 	}
 
 	addr := cfg.Servers.Issuer.Address()
-	log.Println(addr)
+
 	if addr == "" {
 		return nil, fmt.Errorf("주소가 존재하지 않음")
 	}

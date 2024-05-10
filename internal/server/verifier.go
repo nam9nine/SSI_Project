@@ -3,20 +3,20 @@ package server
 import (
 	"github.com/nam9nine/SSI_Project/config"
 	"github.com/nam9nine/SSI_Project/pkg/actors"
-	"github.com/nam9nine/SSI_Project/protos/actors/issuer"
+	"github.com/nam9nine/SSI_Project/protos/actors/verifier"
 	"google.golang.org/grpc"
 	"net"
 )
 
-func StartIssuerServer(cfg *config.Config) {
+func StartVerifierServer(cfg *config.Config) {
 
-	lis, err := net.Listen("tcp", "127.0.0.1:50054")
+	lis, err := net.Listen("tcp", "127.0.0.1:50055")
 
 	if err != nil {
 		panic(err)
 	}
 	s := grpc.NewServer()
-	issuer.RegisterIssuerServiceServer(s, &actors.IssuerServer{})
+	verifier.RegisterVerifierServiceServer(s, &actors.VerifierServer{})
 
 	err = s.Serve(lis)
 

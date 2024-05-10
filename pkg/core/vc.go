@@ -2,8 +2,11 @@ package core
 
 import (
 	"crypto/ecdsa"
+	"encoding/json"
+	"errors"
 	"fmt"
 	"github.com/golang-jwt/jwt/v5"
+	"log"
 	"time"
 )
 
@@ -130,4 +133,40 @@ func GenerateVCProof(subVC *VC, issuerDID string, issuerPvKey *ecdsa.PrivateKey)
 
 func VCVerficationMethod(IssuerDID string) string {
 	return fmt.Sprintf("%s#keys-1", IssuerDID)
+}
+
+func ConvertVCtoJSON(vc *VC) string {
+	jsonData, err := json.Marshal(vc)
+	if err != nil {
+		log.Fatalf("Error marshalling VC to JSON: %v", err)
+	}
+	return string(jsonData)
+}
+
+func UnmarshalVC(jsonData string) (*VC, error) {
+	var vc VC
+	err := json.Unmarshal([]byte(jsonData), &vc)
+	if err != nil {
+		return nil, err
+	}
+	return &vc, nil
+}
+
+func verifyVC(vc *VC, publicKey *ecdsa.PublicKey) error {
+	token, err := jwt.Parse(vc.Proof.JWS, func(token *jwt.Token) (interface{}, error) {
+		if _, ok := token.Method.(*jwt.SigningMethodECDSA); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return publicKey, nil
+	})
+
+	if err != nil {
+		return err
+	}
+
+	if !token.Valid {
+		return errors.New("token is invalid")
+	}
+
+	return nil
 }
