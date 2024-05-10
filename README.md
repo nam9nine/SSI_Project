@@ -14,10 +14,7 @@
 각 서버는 특정 포트에서 작동하며 해당되는 경우 전용 데이터베이스 경로를 가질 수 있습니다.
 
 
-## 의존성 주입
-```shell
-go build
-```
+
 ## Client 및 Server생성
 ### registrar server 생성
 ```shell
