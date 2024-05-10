@@ -1,6 +1,7 @@
 package actors
 
 import (
+	"crypto/ecdsa"
 	"fmt"
 	"github.com/nam9nine/SSI_Project/config"
 	client "github.com/nam9nine/SSI_Project/internal/client"
@@ -62,7 +63,7 @@ func (h *Holder) RegistHolderDID() (*registrar.DIDRegistrarRes, error) {
 	}
 
 	// VDR 클라이언트를 통해 DID 문서를 등록합니다.
-	req, err := client.RegistrarDID(h.DID.Did, docString)
+	req, err := client.RegistrarDID(h.DID.Did, docString, registrar.Role_Holder)
 	if err != nil {
 
 		log.Printf("Error registering DID document: %v", err)
@@ -72,18 +73,22 @@ func (h *Holder) RegistHolderDID() (*registrar.DIDRegistrarRes, error) {
 	return req, nil
 }
 
-func (h *Holder) ResolveHolderDID() *resolver.ResolveDIDRes {
+func (h *Holder) ResolveHolderDID() (*resolver.ResolveDIDRes, error) {
 	did := h.DID.String()
 
 	if h.Cfg == nil {
 		log.Printf("cfg is nil")
 	}
 
-	res, err := client.ResolverDID(did, h.Cfg)
+	res, err := client.ResolverDID(did, h.Cfg, resolver.Role_Holder)
 
 	if err != nil {
-		log.Printf("Error resolving DID document: %v", err)
-		return nil
+
+		return nil, fmt.Errorf("error resolving DID document: %v", err)
 	}
-	return res
+	return res, nil
+}
+
+func (h *Holder) RequestCreateVC(issuerDID string, cs *core.CredentialSubject, issuerPvKey *ecdsa.PrivateKey) {
+
 }

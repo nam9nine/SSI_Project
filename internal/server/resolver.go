@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 	"github.com/nam9nine/SSI_Project/config"
 	resolver "github.com/nam9nine/SSI_Project/protos/vdr/resolver"
 	"github.com/syndtr/goleveldb/leveldb"
@@ -21,7 +22,13 @@ func byteToString(b []byte) string {
 // ResolveDID ResolveDID(context.Context, *ResolveDIDReq) (*ResolveDIDRes, error) RPC메서드 구현
 func (r *ResolverServer) ResolveDID(ctx context.Context, req *resolver.ResolveDIDReq) (*resolver.ResolveDIDRes, error) {
 
-	db, err := leveldb.OpenFile("./internal/db", nil)
+	dbPath, err := DBPathRes(req)
+
+	if err != nil {
+		return nil, err
+	}
+
+	db, err := leveldb.OpenFile(dbPath, nil)
 	if err != nil {
 		panic(err)
 	}
@@ -40,7 +47,7 @@ func StartDIDResolverServer(cfg *config.Config) {
 	lis, err := net.Listen("tcp", cfg.Servers.Resolver.Address())
 
 	if err != nil {
-		log.Fatalf("failed to listen: %v", err)
+		panic(err)
 	}
 
 	s := grpc.NewServer()
@@ -48,6 +55,28 @@ func StartDIDResolverServer(cfg *config.Config) {
 	resolver.RegisterDIDResolverServer(s, &ResolverServer{})
 
 	if err := s.Serve(lis); err != nil {
-		log.Fatalf("failed to serve: %v", err)
+		panic(err)
 	}
+}
+
+func DBPathRes(req *resolver.ResolveDIDReq) (string, error) {
+
+	cfg, err := config.LoadConfig("./././config/config.toml")
+
+	if err != nil {
+		panic(err)
+	}
+	var dbPath string
+
+	switch req.Role {
+	case resolver.Role_Issuer:
+		dbPath = cfg.Servers.Issuer.DBPath
+	case resolver.Role_Holder:
+		dbPath = cfg.Servers.Holder.DBPath
+	case resolver.Role_Verifier:
+		dbPath = cfg.Servers.Verifier.DBPath
+	default:
+		return "", errors.New("invalid role")
+	}
+	return dbPath, nil
 }

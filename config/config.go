@@ -7,14 +7,17 @@ import (
 )
 
 type ServerConfig struct {
-	IP    string `toml:"ip"`
-	Ports string `toml:"ports"`
+	IP     string `toml:"ip"`
+	Ports  string `toml:"ports"`
+	DBPath string `toml:"db_path"`
 }
 
 type Servers struct {
 	Registrar ServerConfig `toml:"registrar"`
 	Resolver  ServerConfig `toml:"resolver"`
 	Holder    ServerConfig `toml:"holder"`
+	Issuer    ServerConfig `toml:"issuer"`
+	Verifier  ServerConfig `toml:"verifier"`
 }
 
 type Config struct {

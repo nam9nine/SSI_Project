@@ -10,14 +10,20 @@ service DIDRegistrar {
 message DIDRegistrarReq {
   string did = 1;
   string didDoc = 2;
+  Role role = 3;
+
 }
 
+enum Role {
+  Holder = 0;
+  Issuer = 1;
+  Verifier = 2;
+}
 
 message DIDRegistrarRes {
   State state = 1;
   string message = 2;
 }
-
 
 enum State {
   UNKNOWN = 0;

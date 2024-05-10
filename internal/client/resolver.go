@@ -10,9 +10,10 @@ import (
 )
 
 // ResolverDID DIDResolver 서버에게 요청
-func ResolverDID(didString string, cfg *config.Config) (*resolver.ResolveDIDRes, error) {
+func ResolverDID(didString string, cfg *config.Config, role resolver.Role) (*resolver.ResolveDIDRes, error) {
 	req := &resolver.ResolveDIDReq{
-		Did: didString,
+		Did:  didString,
+		Role: role,
 	}
 
 	conn, err := grpc.Dial(cfg.Servers.Resolver.Address(), grpc.WithTransportCredentials(insecure.NewCredentials()))

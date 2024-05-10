@@ -10,8 +10,8 @@ import (
 	"log"
 )
 
-// RegistrarDID DID 등록 요청 코드
-func RegistrarDID(did string, doc string) (*registrar.DIDRegistrarRes, error) {
+// RegistrarDID DID 등록 요청 코드 with generics
+func RegistrarDID(did string, doc string, role registrar.Role) (*registrar.DIDRegistrarRes, error) {
 
 	cfg, err := config.LoadConfig("config/config.toml")
 
@@ -32,13 +32,15 @@ func RegistrarDID(did string, doc string) (*registrar.DIDRegistrarRes, error) {
 		return nil, errors.New("registrar 서버와 연결 안 됨")
 	}
 	defer conn.Close()
-	// registrar service와 client 연결
+
 	newClient := registrar.NewDIDRegistrarClient(conn)
 
-	//registrar 서버 함수 호출
+	// Convert role to string or handle serialization based on actual type requirements
+
 	res, err := newClient.RegisterDidDoc(context.Background(), &registrar.DIDRegistrarReq{
 		Did:    did,
 		DidDoc: doc,
+		Role:   role,
 	})
 
 	if err != nil {

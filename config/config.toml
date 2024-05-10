@@ -3,6 +3,7 @@
     ip = "127.0.0.1"
     ports = "50051"
 
+
     [servers.resolver]
     ip = "127.0.0.1"
     ports = "50052"
@@ -10,8 +11,15 @@
     [servers.holder]
     ip = "127.0.0.1"
     ports = "50053"
+    db_path = "./internal/db/holder"
 
     [servers.issuer]
     ip = "127.0.0.1"
     prots = "50054"
+    db_path = "./internal/db/issuer"
+
+    [servers.verifier]
+    ip = "127.0.0.1"
+    prots = "50055"
+    db_path = "./internal/db/verifier"
 

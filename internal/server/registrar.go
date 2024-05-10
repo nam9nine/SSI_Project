@@ -2,6 +2,7 @@ package server
 
 import (
 	"context"
+	"errors"
 	"github.com/nam9nine/SSI_Project/config"
 	registrar "github.com/nam9nine/SSI_Project/protos/vdr/registrar"
 	"github.com/syndtr/goleveldb/leveldb"
@@ -18,7 +19,14 @@ type RegistrarServer struct {
 func (r *RegistrarServer) RegisterDidDoc(ctx context.Context, req *registrar.DIDRegistrarReq) (*registrar.DIDRegistrarRes, error) {
 
 	res := registrar.DIDRegistrarRes{}
-	db, err := leveldb.OpenFile("./internal/db", nil)
+
+	dbPath, err := DBPathReg(req)
+
+	if err != nil {
+		panic(err)
+	}
+
+	db, err := leveldb.OpenFile(dbPath, nil)
 	if err != nil {
 		res.State = registrar.State_UNKNOWN
 		panic(err)
@@ -53,4 +61,26 @@ func StartRegisterServer(cfg *config.Config) {
 	if err != nil {
 		panic(err)
 	}
+}
+
+func DBPathReg(req *registrar.DIDRegistrarReq) (string, error) {
+
+	cfg, err := config.LoadConfig("./././config/config.toml")
+
+	if err != nil {
+		panic(err)
+	}
+	var dbPath string
+
+	switch req.Role {
+	case registrar.Role_Issuer:
+		dbPath = cfg.Servers.Issuer.DBPath
+	case registrar.Role_Holder:
+		dbPath = cfg.Servers.Holder.DBPath
+	case registrar.Role_Verifier:
+		dbPath = cfg.Servers.Verifier.DBPath
+	default:
+		return "", errors.New("invalid role")
+	}
+	return dbPath, nil
 }

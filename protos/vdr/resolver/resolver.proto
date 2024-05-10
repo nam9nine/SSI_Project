@@ -8,6 +8,7 @@ service DIDResolver {
 
 message ResolveDIDReq {
   string did = 1;
+  Role role = 2;
 }
 
 message ResolveDIDRes {
@@ -19,4 +20,10 @@ enum State {
   UNKNOWN = 0;
   SUCCESS = 1;
   FAILURE = 2;
+}
+
+enum Role {
+  Holder = 0;
+  Issuer = 1;
+  Verifier = 2;
 }

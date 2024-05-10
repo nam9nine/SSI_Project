@@ -4,7 +4,7 @@ go 1.22.1
 
 require (
 	github.com/BurntSushi/toml v1.3.2
-	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/golang-jwt/jwt/v5 v5.2.1
 	github.com/multiformats/go-multibase v0.2.0
 	github.com/syndtr/goleveldb v1.0.0
 	google.golang.org/grpc v1.63.2

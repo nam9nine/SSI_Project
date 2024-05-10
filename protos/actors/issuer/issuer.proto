@@ -1,0 +1,16 @@
+syntax = "proto3";
+package actors.issuer;
+option go_package = "github.com/nam9nine/SSI_Project/protos/actors/issuer";
+
+
+service IssuerService {
+  rpc CreateUniversityVC(IssuerReq) returns (IssuerRes) {}
+}
+
+message IssuerReq {
+  string HolderDID = 1;
+}
+
+message IssuerRes {
+  string VC = 1;
+}
